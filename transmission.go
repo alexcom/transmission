@@ -536,6 +536,13 @@ func (ac *TransmissionClient) AddFileData(data []byte, dndir string) (TorrentAdd
 	return add, err
 }
 
+func (ac *TransmissionClient) Add(url string, dndir string) (TorrentAdded, error) {
+	cmd := NewAddCmdByURL(url)
+	cmd.SetDownloadDir(dndir)
+	add, err := ac.ExecuteAddCommand(cmd)
+	return add, err
+}
+
 func (ac *TransmissionClient) Rename(id int, sn, dn string) (resp Command, err error) {
 	cmd := Command{Method: "torrent-rename-path"}
 	cmd.Arguments.Ids = []int{id}
